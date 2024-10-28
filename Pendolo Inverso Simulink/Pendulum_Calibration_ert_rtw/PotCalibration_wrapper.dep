@@ -1,0 +1,5 @@
+PotCalibration_wrapper.o: \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/PotCalibration_wrapper.c \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendulum_Calibration_ert_rtw/rtwtypes.h
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendulum_Calibration_ert_rtw/rtwtypes.h:

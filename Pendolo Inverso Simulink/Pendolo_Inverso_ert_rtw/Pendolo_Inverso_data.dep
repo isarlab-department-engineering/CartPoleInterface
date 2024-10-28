@@ -1,0 +1,65 @@
+Pendolo_Inverso_data.o: \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/Pendolo_Inverso_data.c \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/Pendolo_Inverso.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2024a/simulink/include/rtw_continuous.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h \
+ C:/PROGRA~1/MATLAB/R2024a/simulink/include/rtw_solver.h \
+ C:/PROGRA~1/MATLAB/R2024a/simulink/include/rtw_continuous.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_arduino_digitalio.h \
+ C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_PWM.h \
+ C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_SVD.h \
+ C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_AnalogIn.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_SerialRead.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_SerialWrite.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/Pendolo_Inverso_types.h \
+ C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_SVD.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_nonfinite.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtGetNaN.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/MW_target_hardware_resources.h \
+ C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~2/SCHEDU~1/include/arduinoAVRScheduler.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2024a/aCLI/data/packages/arduino/hardware/avr/1.8.3/cores/arduino/Arduino.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2024a/aCLI/data/packages/arduino/hardware/avr/1.8.3/cores/arduino/binary.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2024a/aCLI/data/packages/arduino/hardware/avr/1.8.3/variants/standard/pins_arduino.h
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/Pendolo_Inverso.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2024a/simulink/include/rtw_continuous.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h:
+
+C:/PROGRA~1/MATLAB/R2024a/simulink/include/rtw_solver.h:
+
+C:/PROGRA~1/MATLAB/R2024a/simulink/include/rtw_continuous.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_arduino_digitalio.h:
+
+C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_PWM.h:
+
+C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_SVD.h:
+
+C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_AnalogIn.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_SerialRead.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~1/include/MW_SerialWrite.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/Pendolo_Inverso_types.h:
+
+C:/PROGRA~1/MATLAB/R2024a/toolbox/target/shared/svd/common/include/MW_SVD.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_nonfinite.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtGetNaN.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/MW_target_hardware_resources.h:
+
+C:/PROGRA~3/MATLAB/SUPPOR~1/R2024a/toolbox/target/SUPPOR~1/ARDUIN~2/SCHEDU~1/include/arduinoAVRScheduler.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2024a/aCLI/data/packages/arduino/hardware/avr/1.8.3/cores/arduino/Arduino.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2024a/aCLI/data/packages/arduino/hardware/avr/1.8.3/cores/arduino/binary.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2024a/aCLI/data/packages/arduino/hardware/avr/1.8.3/variants/standard/pins_arduino.h:

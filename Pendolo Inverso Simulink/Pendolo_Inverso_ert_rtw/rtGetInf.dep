@@ -1,0 +1,11 @@
+rtGetInf.o: \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtGetInf.c \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtGetInf.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_nonfinite.h
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtGetInf.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_nonfinite.h:

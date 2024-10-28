@@ -1,0 +1,17 @@
+rt_zcfcn.o: \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_zcfcn.c \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/zero_crossing_types.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_zcfcn.h \
+ C:/PROGRA~1/MATLAB/R2024a/simulink/include/solver_zc.h \
+ C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/zero_crossing_types.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rt_zcfcn.h:
+
+C:/PROGRA~1/MATLAB/R2024a/simulink/include/solver_zc.h:
+
+C:/Users/josep/OneDrive/Desktop/JOSEPH~1/PENDOL~1/Pendolo_Inverso_ert_rtw/rtwtypes.h:
