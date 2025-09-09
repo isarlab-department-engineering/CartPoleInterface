@@ -1,171 +1,222 @@
-# Pendolo Inverso
+# Interfaccia Grafica Python per il Controllo, l’Addestramento e il Test di un Agente SAC  
 
-### Panoramica del Progetto
-Questo progetto implementa un sistema di pendolo inverso controllato tramite un motore a corrente continua (DC), utilizzando tecniche di apprendimento per rinforzo. Il sistema coinvolge simulazioni, comunicazione con hardware (come Arduino) e modelli di controllo allenati. 
-Questo progetto è stato pensato con Python 3.11.9 e Matlab 2024a in mente.
-La repository contiene i seguenti componenti principali:
+## Panoramica del Progetto  
 
-1. **Ambiente di Simulazione (basato su Gymnasium)**: `Pendolo_Inverso_DC_Motor.py`
-2. **Addestramento e Test del Modello di Apprendimento per Rinforzo (RL)**: `PendulumGym.py`
-3. **Comunicazione Seriale con l'Hardware**: `Serial_Communication.py`
-4. **Modello Simulink**: `Pendolo_Inverso.slx`
+Questo progetto consiste nello sviluppo di un'interfaccia grafica (GUI) in **Python** progettata per interfacciarsi con un sistema di controllo, sia in ambiente virtuale che su hardware reale, sfruttando un agente di **Reinforcement Learning** di tipo **SAC (Soft Actor-Critic)**.  
 
----
+L'interfaccia offre le seguenti funzionalità principali:  
 
-### Descrizione dei File
+1. **Gestione della Comunicazione Seriale**  
+   La GUI consente l'apertura e la gestione di una comunicazione seriale con dispositivi hardware esterni (es. un CartPole robotico), facilitando il collegamento tra software e componente fisica.  
 
-1. **`Controllore Python`**
+2. **Simulazione Virtuale dell'Agente SAC Pre-addestrato**  
+   È possibile simulare il comportamento di un agente SAC già addestrato all'interno di un ambiente virtuale, specificando il numero di step desiderati per l'esecuzione.  
 
-    1. **`Pendolo_Inverso_DC_Motor.py`**  
-    Questo file contiene l'ambiente personalizzato basato su Gymnasium per simulare un sistema di pendolo inverso controllato da un motore DC.
-    - **Classe principale**: `CartPoleEnv`
-    - **Caratteristiche principali**:
-        - Simula un sistema di pendolo su carrello con parametri come gravità, massa e caratteristiche del motore.
-        - Lo spazio delle azioni definisce il segnale PWM (Pulse Width Modulation) che controlla la forza applicata al carrello.
-        - Lo spazio delle osservazioni include la posizione e la velocità del carrello, l'angolo del pendolo e la velocità angolare.
-        - Include la fisica per il calcolo delle forze sul sistema e integra questi dati nel tempo utilizzando l'integrazione di Eulero.
-        - L'ambiente può essere visualizzato (rendering) e supporta condizioni di terminazione basate sulla posizione del carrello o sull'angolo del pendolo.
+3. **Controllo di un CartPole Reale tramite Comunicazione Seriale**  
+   L'interfaccia permette di controllare direttamente un CartPole reale attraverso la porta seriale, inclusa la possibilità di eseguire su di esso una simulazione del comportamento di un agente SAC.  
 
-    2. **`PendulumGym.py`**  
-    Questo file integra l'ambiente `CartPoleEnv` con l'algoritmo di apprendimento per rinforzo, in particolare il Deep Q-Network (DQN) dalla libreria `stable_baselines3`.
-    - **Caratteristiche principali**:
-        - Carica l'ambiente personalizzato `CartPoleEnv`.
-        - Un modello DQN pre-addestrato (`dqn_DC_Motor_cartpole`) è già incluso e viene caricato per controllare il sistema.
-        - Il modello DQN interagisce con l'ambiente prevedendo azioni da applicare in tempo reale con l'obiettivo di mantenere il pendolo in equilibrio.
-        - Per un controllo avanzato, il modello DQN può essere riaddestrato utilizzando diverse politiche o parametri.
+4. **Test Manuale del CartPole con Azioni Personalizzate**  
+   L'utente può inviare manualmente comandi al CartPole reale sotto forma di azioni, che vengono convertite in segnali PWM, utili per attività di test e taratura dei parametri fisici del progetto.  
 
+5. **Addestramento di un Nuovo Agente SAC**  
+   È possibile avviare l'addestramento di un nuovo agente SAC direttamente dall'interfaccia. Alcuni parametri, come quelli di training o la frequenza di stampa, possono essere configurati dall'interfaccia, mentre altri sono modificabili solo tramite codice (hardcoded), così come i parametri tecnici passati al costruttore dell'agente.  
 
-    3. **`Serial_Communication.py`**  
-    Questo script gestisce la comunicazione tra l'ambiente Python e un setup hardware esterno (ad esempio, un controller Arduino) tramite una porta seriale.
-    - **Caratteristiche principali**:
-        - Apre e gestisce la comunicazione seriale con l'hardware utilizzando la libreria `pyserial`.
-        - Invia segnali di controllo (come abilitazione, homing e movimento del pendolo) tramite comandi predefiniti (`ENABLE`, `HOME`, ecc.).
-        - Legge lo stato del pendolo (posizione, velocità, angolo) dall'hardware e utilizza il modello DQN per prevedere la coppia necessaria per la stabilizzazione.
-        - Gestisce input della tastiera in tempo reale per controllare l'hardware e passare tra le diverse modalità.
+6. **Accesso a un'Interfaccia per Fine-Tuning su Hardware Reale**  
+   Il sistema include una seconda interfaccia grafica che consente di eseguire il **fine-tuning** di un agente SAC direttamente sul CartPole reale, permettendo un adattamento più preciso del modello all'ambiente fisico attraverso un ulteriore processo di addestramento mirato.  
 
-    - **Significato dei Comandi**:
-        - `ENABLE`: Abilita o disabilita i motori **Controllato dal tasto `1`**
-        - `HOME`: Abilita o disabilità la modalità di homing del pendolo **Controllato dal tasto `2`**
-        - `MOVE_CENTER`: Sposta il carrello al centro della base **Controllato dal tasto `3`**
-        - `MODE`: Passa dalla modalità di calibrazione alla modalità di stabilizzazione (in modalità di stabilizzazione Arduino ignora i comandi di `HOME` e `MOVE_CENTER` e attua esclusivamente il segnale di controllo generato dal modello DQN) **Controllato dal tasto `4`**
-        - `ENABLE_CONTROL`: Abilita o disabilita la generazione del segnale di controllo da parte del modello DQN **Controllato dal tasto `5`**
-    
-    4. **`File_and_Serial_Manager.py`**
-    Questo script Python utilizza la libreria tkinter per creare un'interfaccia grafica che permette di selezionare una porta seriale e scegliere file o directory sul sistema.
+---  
 
-    - **Classe principale**: `Manager`
-    - **Caratteristiche principali**:
-        - Selezione della Porta Seriale: Visualizza una lista di porte seriali disponibili e permette di selezionare una porta.
-        - Aggiornamento delle Porte Seriali: Consente di aggiornare la lista delle porte seriali in tempo reale.
-        - Selezione di un File ZIP: Apre un dialogo per selezionare un file ZIP dal sistema.
-        - Scelta del Percorso di Salvataggio: Permette di selezionare una directory e specificare il nome di un file da salvare.
+## Struttura del Progetto  
 
-2. **`Pendolo Inverso Simulink`**
+Il progetto è organizzato in **quattro package principali**, che riflettono le diverse responsabilità del sistema: **GUI**, **Controllo_Seriale**, **Controllo_e_Simulazione**, e **Context**. Di seguito una panoramica dei package e dei file principali, con le rispettive funzionalità.  
 
-    Vengono spiegati solo i file principali
+---  
 
-    1. **`Pendolo_Inverso.slx`**  
-    Un modello Simulink per la simulazione del sistema di pendolo inverso nei test in tempo reale. Questo modello può essere utilizzato per confrontare le prestazioni teoriche e quelle reali del sistema.
-    Il modello viene eseguito ad un periodo pari a `Tc` (Vedi `LoadData.m`)
-    In breve il codice:
-       - Legge ogni ciclo dalla seriale
-        - Decifra il messaggio letto e lo applica
-        - Legge i valori degli encoder e attua sui motori grazie alle S-Function `sfcn_encoder.c` e `sfcn_toPins.c`
-        - Ogni 0.05 secondi invia informazioni a python
+### `GUI/`  
 
-    2. **`Pendulum_Calibration.slx`**  
-    Un modello Simulink per la calibrazione dell'asta del pendolo
+Questo package gestisce l'interfaccia grafica principale del progetto. Contiene le classi che compongono la GUI e il sottopackage dedicato al fine-tuning su hardware reale.  
 
-    3. **`SaveCalibrateData.m`**
-    Uno script Matlab per salvare permanentemente i valori di calibrazione
+#### Classi principali:  
 
-    4. **`LoadData.m`**
-    Uno script Matlab per caricare nel Workspace tutte le variabili utili per la corretta esecuzione del modello `Pendolo_Inverso.slx`
+- **`Index.py`**  
+  Entry point del programma. Inizializza e avvia l'interfaccia grafica.  
 
----
+- **`ArduinoGUI.py`**  
+  Implementa l'interfaccia utente per l'interazione con il sistema.  
 
-### Come Utilizzare
+- **`PyArduinoGUIController.py`**  
+  Controller che collega la GUI ad altri moduli, come quelli per il controllo seriale e la simulazione.  
 
-1. **Calibrazione Pendolo**
-    Prima di iniziare è necessario calibrare correttamente il pendolo. Se questa è la prima calibrazione, è possibile calibrare il pendolo seguendo le istruzzioni contentute nel file `Pendulum_Calibration.slx`. E' poi necessario eseguire i due script `SaveCalibrateData.m` e `LoadData.m`.
-    Se la calibrazione è già stata eseguita in precedenza allora è possibile eseguire semplicemente lo script `LoadData.m`.
+#### Sottopackage:  
 
-2. **Caricamento del codice su Arduino**
-    Una volta eseguita la calibrazione, e aver caricato nel Matlab Workspace tutti i dati necessari, è possibile caricare il codice di `Pendolo_Inverso.slx` sulla scheda Arduino cliccando il bottone `Build, Deploy & Start` sotto la sezione `Hardware`.
-    In caso non fossero, già presenti, è necessario generare il codice C associato ai due blocchi `S-Function Builder`, questo può essere fatto aprendo i due blocchi presenti nel sottosistema `Pendulum Control` e cliccando il tasto `Build`.
+##### `FineTuningGUI/`  
 
-3. **Addestrare o Testare il Modello RL**  
-   È possibile modificare il file `PendulumGym.py` per addestrare un nuovo modello DQN o testare il modello pre-addestrato. Per addestrare un nuovo modello, decommentare le linee nel codice relative all'addestramento del modello:
-   
-   ```python
-   model = DQN("MlpPolicy", env, verbose=1)
-   model.learn(total_timesteps=100000, log_interval=5)
-   model.save("dqn_DC_Motor_cartpole_v100")
-   ```
+Contiene l'interfaccia dedicata al **fine-tuning** di un agente SAC direttamente sul CartPole reale.  
 
-   Per visualizzare i test del modello caricato, assicurati di generare nel seguente modo l'ambiente env:
+- **`RealTuningGUI.py`**  
+  GUI che permette il **fine-tuning** di un agente SAC sull'hardware fisico (CartPole reale).  
 
-   ```python
-   env = CartPoleEnv(render_mode='human')
-   ```
+---  
 
-   In fase di addestramento è consigliabile invece generare l'ambiente nel seguente modo, in quanto la fase di rendering va a rallentare l'addestramento:
+### `Controllo_Seriale/`  
 
-   ```python
-   env = CartPoleEnv()
-   ```
+Questo package gestisce tutta la comunicazione seriale con l'hardware.  
 
-4. **Connessione all'Hardware**  
-   Lo script `Serial_Communication.py` deve essere utilizzato per interfacciarsi con l'hardware tramite comunicazione seriale. 
+- **`File_di_appoggio_funzioni.py`**  
+  Contiene funzioni di supporto utilizzate internamente per operazioni comuni.  
 
-   Utilizzare input della tastiera per controllare l'hardware e il modello DQN prevederà le azioni necessarie per mantenere il pendolo in equilibrio in base ai dati ricevuti dai sensori dell'hardware.
+- **`SerialController.py`**  
+  Implementa funzioni utilizzate sia da `PyArduinoGUIController` sia da `SerialSenderManager`. Media il controllo tra interfaccia e comunicazione.  
 
-    - Attivare `ENABLE` (tasto **1**) e la funzione `HOME` (tasto **2**).
-    - Dopo averli attivati, il sistema si dirigerà verso il lato della base e cercherà di eseguire un'azione di homing (non spegnere mai il pulsante Home dopo che il sistema è stato messo in homing).
-    - Attendere che il motore smetta di generare suoni prima di procedere.
-    - Dopo il processo di homing, attivare `MOVE_CENTER` (tasto **3**) per spostare il carrello al centro del sistema.
-    - Ora il sistema dovrebbe essere al centro. 
-    - Ora è possibile avviare il controllo. A tale scopo, cambiare la modalità attivando `MODE` (tasto **4**).
-    - Sollevare l'asta verso l'alto con la mano per avviare il controllo.
-    - Quindi attivare il `ENABLE_CONTROL` (tasto **5**) tenendo l'asta in posizione verticale con la mano.
-    - Una volta attivato il controllo di abilitazione, il sistema entrerà in modalità di controllo automatico e cercherà di stabilizzare l'asta.
+- **`SerialSenderManager.py`**  
+  Classe fondamentale che gestisce la comunicazione seriale su un **thread separato**, garantendo efficienza e asincronia nella comunicazione con l'hardware.  
 
+---  
 
----
+### `Controllo_e_Simulazione/`  
 
-### Dipendenze Python
+Package dedicato alla simulazione, training e gestione degli agenti SAC e del loro ambiente virtuale.  
 
-Per eseguire gli script Python, sono necessarie le seguenti dipendenze:
-- `gymnasium 0.29.1`
-- `numpy 2.1.1`
-- `stable-baselines3 2.3.2`
-- `pygame 2.6.1` (per il rendering)
-- `pyserial 3.5` (per la comunicazione seriale)
-- `keyboard 0.13.5` (per gestire gli input della tastiera)
+- **`Circ_Buff.py`**  
+  Implementazione di un **buffer circolare** con metodi per calcolare medie e altre statistiche, utile per logging e smoothing.  
 
-È possibile installarle tramite pip:
+- **`Pendolo_inverso_Env.py`**  
+  Definisce l'**environment fisico simulato**, compresi parametri dinamici, funzioni di reward e logica dell'ambiente.  
+
+- **`PendulumGym.py`**  
+  Contiene funzioni come `train()` e `load()` per gestire il ciclo di vita di un **modello SAC**, dall'addestramento al testing.  
+  Il modello utilizza la **MlpPolicy** (Multilayer Perceptron) come architettura neurale predefinita, ideale per ambienti con spazio degli stati e delle azioni continuo.  
+
+- **`SACLogger.py`**  
+  Utilizza **LivePlot** per visualizzare l'andamento dell'addestramento in tempo reale.  
+  La classe fornisce metodi semplici da utilizzare e si integra nell'`_init_logger(self)` contenuto nel `__init__` di **`Pendolo_inverso_Env.py`**.  
+
+- **`ModelManagerGUI.py`**  
+  Classe che fornisce funzionalità per **caricare, simulare e trasferire modelli SAC** (sim-to-real), e gestire le operazioni relative alla loro esecuzione.  
+
+---  
+
+### `Context/`  
+
+- **`AppContext.py`**  
+  Classe centrale per la **gestione del contesto applicativo**. Contiene variabili e oggetti condivisi tra i diversi moduli del progetto, semplificando l'integrazione e la comunicazione tra componenti.  
+
+---  
+
+## Riepilogo  
+
+La suddivisione in package riflette una struttura **modulare e scalabile**, che separa chiaramente le responsabilità:  
+
+| Package                     | Responsabilità Principale                                   |  
+|-----------------------------|------------------------------------------------------------|  
+| `GUI`                       | Interfaccia utente e controllo generale                    |  
+| `FineTuningGUI`             | Fine-tuning SAC direttamente su hardware reale             |  
+| `Controllo_Seriale`         | Comunicazione asincrona e gestione seriale                 |  
+| `Controllo_e_Simulazione`   | Simulazione, training e gestione agenti SAC                |  
+| `Context`                   | Gestione centralizzata dello stato e dei parametri globali |  
+
+---  
+
+## Requisiti  
+
+- **Python**: 3.13 o superiore  (attualmente in  3.13.2)
+- **IDE consigliato**: PyCharm 2024.3.5 (Community Edition)  
+- **Sistema operativo**: Windows  
+
+---  
+
+## Installazione  
+
+Per utilizzare il progetto, è necessario installare i seguenti pacchetti Python:  
+
+| Package                  | Versione      |  
+|--------------------------|--------------|  
+| cloudpickle              | 3.1.1        |  
+| contourpy                | 1.3.3        |  
+| cycler                   | 0.12.1       |  
+| Farama-Notifications     | 0.0.4        |  
+| filelock                 | 3.18.0       |  
+| fonttools                | 4.59.0       |  
+| fsspec                   | 2025.7.0     |  
+| gymnasium                | 1.2.0        |  
+| Jinja2                   | 3.1.6        |  
+| kiwisolver               | 1.4.8        |  
+| MarkupSafe               | 3.0.2        |  
+| matplotlib               | 3.10.5       |  
+| mpmath                   | 1.3.0        |  
+| networkx                 | 3.5          |  
+| numpy                    | 2.3.2        |  
+| packaging                | 25.0         |  
+| pandas                   | 2.3.1        |  
+| pillow                   | 11.3.0       |  
+| pygame                   | 2.6.1        |  
+| pyparsing                | 3.2.3        |  
+| pyserial                 | 3.5          |  
+| python-dateutil          | 2.9.0.post0  |  
+| pytz                     | 2025.2       |  
+| six                      | 1.17.0       |  
+| stable_baselines3        | 2.7.0        |  
+| sympy                    | 1.14.0       |  
+| torch                    | 2.7.1        |  
+| typing_extensions        | 4.14.1       |  
+| tzdata                   | 2025.2       |  
+
+---  
+
+### Installazione Rapida  
+
+Per installare tutte le dipendenze in un solo comando:  
+
 ```bash
-pip install gymnasium==0.29.1 numpy==2.1.1 stable-baselines3==2.3.2 pygame==2.6.1 pyserial==3.5 keyboard==0.13.5
+pip install cloudpickle==3.1.1 contourpy==1.3.3 cycler==0.12.1 Farama-Notifications==0.0.4 filelock==3.18.0 fonttools==4.59.0 fsspec==2025.7.0 gymnasium==1.2.0 Jinja2==3.1.6 kiwisolver==1.4.8 MarkupSafe==3.0.2 matplotlib==3.10.5 mpmath==1.3.0 networkx==3.5 numpy==2.3.2 packaging==25.0 pandas==2.3.1 pillow==11.3.0 pygame==2.6.1 pyparsing==3.2.3 pyserial==3.5 python-dateutil==2.9.0.post0 pytz==2025.2 six==1.17.0 stable_baselines3==2.7.0 sympy==1.14.0 torch==2.7.1 typing_extensions==4.14.1 tzdata==2025.2
 ```
 
-### Dipendenze Simulink
+---
 
-Per eseguire i modelli Simulink sono necessarie le seguenti dipendenze:
-- `Arduino Drivers`
-- `Simulink Support Package for Arduino Hardware 24.1.3`
-- `MATLAB Support for MinGw-w64 C / C ++ Compiler 24.1.0`
-- `Embedded Coder 24.1`
+## Come Utilizzare
 
-Per installare i driver di Arduino, scaricare e installare l'IDE Arduino da questo link. [https://www.arduino.cc/en/software]
+Per utilizzare il progetto scaricare la cartella:
 
-Gli Add-On `Simulink Support Package for Arduino Hardware`, `MATLAB Support for MinGw-w64 C / C ++ Compiler` e `Embedded Coder` possono essere installati direttamente da Simulink aprendo un qualsiasi modello e seguento i seguenti passaggi:
--   Apps ->  Get Add-Ons e cercando gli Add-On richiesti 
+**`CODICE.zip`** in cui si troveranno tutti i file py.
+Per il codice Matlab leggere il paragrafo **"Informazioni sul Microcontrollore Arduino"**
+
+Tutte le informazioni necessarie per il corretto utilizzo dell'interfaccia sono disponibili nel file:
+
+**`GUIDA_all_uso_dell_interfaccia.pdf`**
+
+Assicurati di consultare questo documento per istruzioni dettagliate su:
+
+- Avvio dell’interfaccia grafica  
+- Connessione seriale  
+- Simulazione e controllo dell'agente SAC  
+- Fine-tuning sul CartPole reale/simulato  
+- Parametri configurabili
+
 
 ---
 
-### Note
-- `tkinter` è solitamente preinstallato con Python, ma potrebbe essere necessario installarlo manualmente in alcuni ambienti.
-- Assicurarsi che il modello Simulink (`Pendolo_Inverso.slx`) sia compatibile con la versione di MATLAB in uso e sia configurato correttamente per interagire con il setup hardware.
-- Le impostazioni di comunicazione seriale (porta, velocità) devono corrispondere alla configurazione del proprio hardware (ad esempio, Arduino) per garantire una corretta sincronizzazione.
+## Informazioni sul Microcontrollore Arduino
 
----
+Una parte delle informazioni riguardanti:
+
+- Il **caricamento del codice** sul microcontrollore Arduino  
+- La **struttura del codice embedded**  
+- Le **funzionalità implementate lato Arduino**
+
+Sono documentate all'interno di una **repository separata**, creata nell’ambito di una **precedente tesi di laurea triennale**. Alcuni dettagli tecnici non sono inclusi in questo progetto, pertanto è necessario consultare quella risorsa per ottenere una visione completa e corretta del funzionamento dell’intero sistema.
+
+**Repository Arduino:**  
+[Visita la repository](https://github.com/isarlab-department-engineering/CartPoleInterface/tree/main)
+
+### Sezioni Importanti da Consultare
+
+All'interno di quella repository, le parti più rilevanti per l'integrazione con questo progetto sono:
+
+- **Sezione `Dipendenze Simulink`**  
+  Contiene tutte le indicazioni fondamentali per la configurazione di Arduino tramite Simulink. È importante seguire scrupolosamente le istruzioni presenti per garantire la compatibilità con la parte hardware.
+
+- **Cartella `Pendolo Inverso Simulink`**  
+  Include i **codici MATLAB e Simulink** necessari per il controllo del sistema fisico del pendolo inverso. Questa sezione può essere utile per comprendere il comportamento del codice dell'Arduino e per l’eventuale riconfigurazione del modello.
+
+**Nota Importante**  
+Per usare il controllo su hardware reale, è **obbligatorio configurare correttamente Arduino tramite Simulink**, come spiegato nella repository. La compatibilità tra software e componente embedded dipende da questa configurazione.
